@@ -13,10 +13,22 @@ public class Customer {
 
     public Customer(String code, String name, double creditLimit) {
         // TODO: validate constructor arguments
+        if (code == null || code.isBlank()) {
+            throw new IllegalArgumentException("Код клиента не может быть пустым или состоять только из пробелов");
+        }
+        if (name==null || name.isBlank()) {
+            throw new IllegalArgumentException("Имя клиента не может быть пустым или состоять только из пробелов");
+        }
+        if (creditLimit<0) {
+            throw new IllegalArgumentException("Кредитный лимит не может быть отрицательным");
+        }
+
         this.code = code;
         this.name = name;
         this.creditLimit = creditLimit;
         this.active = true;
+
+
     }
 
     public String getCode() {
@@ -37,26 +49,37 @@ public class Customer {
 
     public void rename(String newName) {
         // TODO: validate and change the customer name
-        throw new UnsupportedOperationException("TODO");
+        if (newName==null || newName.isBlank()) {
+            throw new IllegalArgumentException("Новое имя не может быть пустым");
+        }
+        this.name = newName;
     }
 
     public void changeCreditLimit(double newCreditLimit) {
         // TODO: validate and change the credit limit
-        throw new UnsupportedOperationException("TODO");
+        if (newCreditLimit < 0) {
+            throw new IllegalArgumentException("Кредитный лимит не может быть отрицательным");
+        }
+        this.creditLimit = newCreditLimit;
     }
 
     public void activate() {
         // TODO: activate the customer
-        throw new UnsupportedOperationException("TODO");
+        this.active = true;
+
     }
 
     public void deactivate() {
         // TODO: deactivate the customer
-        throw new UnsupportedOperationException("TODO");
+        this.active = false;
     }
 
     public boolean canPlaceOrder(double orderTotal) {
         // TODO: return true only for an active customer whose order fits the credit limit
-        throw new UnsupportedOperationException("TODO");
+        if (orderTotal < 0) {
+            throw new IllegalArgumentException("Сумма заказа не может быть отрицательной");
+        }
+
+        return this.active && orderTotal <= this.creditLimit;
     }
 }
