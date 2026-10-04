@@ -9,8 +9,15 @@ public class OrderItem {
 
     public OrderItem(Product product, int quantity) {
         // TODO: validate constructor arguments
+        if (product==null) {
+            throw new IllegalArgumentException("Товар не может быть null");
+        }
+        if (quantity<=0) {
+            throw new IllegalArgumentException("Количество товара должно быть строго больше 0");
+        }
         this.product = product;
         this.quantity = quantity;
+
     }
 
     public Product getProduct() {
@@ -23,6 +30,6 @@ public class OrderItem {
 
     public double getAmount() {
         // TODO: delegate the calculation to Product
-        throw new UnsupportedOperationException("TODO");
+        return this.product.calculateAmount(this.quantity);
     }
 }
